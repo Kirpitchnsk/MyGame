@@ -43,7 +43,6 @@ namespace SibGameJam2026.Characters.Components {
 
 			if (moveDirection.sqrMagnitude > MoveDeadZone * MoveDeadZone) {
 				movementComponent.SetMoveInput(moveDirection);
-				movementComponent.SetLookDirection(forward);
 			} else {
 				movementComponent.Stop();
 			}
