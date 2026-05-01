@@ -8,5 +8,6 @@ namespace SibGameJam2026.Characters {
 		[field: SerializeField] public CharacterController CharacterController { get; private set; }
 		[field: SerializeField] public Animator Animator { get; private set; }
 		[field: SerializeField] public Transform CameraPoint { get; private set; }
+		[field: SerializeField] public Transform ItemPosition { get; private set; }
 	}
 }

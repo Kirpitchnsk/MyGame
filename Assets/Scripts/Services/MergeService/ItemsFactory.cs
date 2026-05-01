@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SibGameJam2026;
 using UnityEngine;
-using Zenject;
 
 namespace SibGameJam2026.MergeService {
 	public class ItemsFactory {
@@ -71,6 +69,7 @@ namespace SibGameJam2026.MergeService {
 		private static void ActivateVisual(ItemVisual visual, Vector3 position, Quaternion rotation, Transform parent) {
 			visual.transform.SetParent(parent, false);
 			visual.transform.SetPositionAndRotation(position, rotation);
+			visual.SetInteractionColliderEnabled(true);
 			visual.gameObject.SetActive(true);
 		}
 	}
