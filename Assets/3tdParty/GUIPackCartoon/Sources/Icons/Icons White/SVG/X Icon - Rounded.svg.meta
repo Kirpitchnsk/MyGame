@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: f03d1a5b8d51e42e6a22cc21568a962b
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/X Icon - Rounded.svg
-  uploadId: 769476
+guid: 953ec7968c915f64e9beed4ed7575080
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

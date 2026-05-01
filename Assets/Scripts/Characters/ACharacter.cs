@@ -46,6 +46,6 @@ namespace SibGameJam2026.Characters {
 
 
 		
-		public class Factory : PlaceholderFactory<ECharacterType, ACharacter> { }
+		public class Factory : PlaceholderFactory<ECharacterType, Vector3, ACharacter> { }
 	}
 }

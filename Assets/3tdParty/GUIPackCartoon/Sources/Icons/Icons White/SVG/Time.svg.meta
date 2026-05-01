@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 586903bde61f94422aa12c167b0490d8
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/Time.svg
-  uploadId: 769476
+guid: 342febf62ad481e46bd8060731d8f887
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

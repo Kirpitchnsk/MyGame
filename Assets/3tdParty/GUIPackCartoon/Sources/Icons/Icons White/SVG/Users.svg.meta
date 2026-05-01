@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 963989fc206dd4048a7d47bcc9090c2d
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/Users.svg
-  uploadId: 769476
+guid: ac3f0cb58c18a2543add36f01bb05843
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

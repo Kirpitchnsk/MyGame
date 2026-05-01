@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: 5f13d62b27cfc4df99191e081ab0497f
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/Sticker Star.svg
-  uploadId: 769476
+guid: 4bae01afd4c62504da6ffe0ad4db6fc0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

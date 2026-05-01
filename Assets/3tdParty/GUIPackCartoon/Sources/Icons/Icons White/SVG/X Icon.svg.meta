@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: e384e1cec70844591b849148ed78aba0
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/X Icon.svg
-  uploadId: 769476
+guid: f8cf77bb1f5cd744292a1267ab6a144f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

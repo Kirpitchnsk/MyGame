@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 7f7fba132cb08814b923dff250229858
   m_SerializeEntries:
+  - m_GUID: 759e5f9523aff664aada567837617551
+    m_Address: Assets/Content/Prefabs/ItemVisuals/HotWaterItemData.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bc85407c3c9e1b4c9d653d14105fcc0
+    m_Address: Assets/Content/Prefabs/ItemVisuals/Water_ItemVisual.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c605eb7d0b797ab4f9ec75cc61d0704a
     m_Address: Assets/Content/Prefabs/Player.prefab
     m_ReadOnly: 0

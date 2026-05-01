@@ -5,17 +5,20 @@ namespace SibGameJam2026.Characters.Components {
 		private readonly ACharacter _character;
 		public ACharacter Character => _character;
 		private readonly Transform _transform;
+		private readonly CharacterController _characterController;
 		private Vector3 _moveInput;
 		private Vector3 _lookDirection;
+		private float _nextDebugLogTime;
 
 		public float MoveSpeed { get; }
 		public float RotationSpeed { get; }
 
-		public MovementCharacterComponent(ACharacter character, float moveSpeed = 5f, float rotationSpeed = 360f) {
+		public MovementCharacterComponent(ACharacter character, CharacterEntry entry) {
 			_character = character;
 			_transform = character.transform;
-			MoveSpeed = moveSpeed;
-			RotationSpeed = rotationSpeed;
+			_characterController = character.Data.CharacterController;
+			MoveSpeed = entry.MoveSpeed;
+			RotationSpeed = entry.RotationSpeed;
 		}
 
 		public void SetMoveInput(Vector3 moveInput) {
@@ -33,7 +36,9 @@ namespace SibGameJam2026.Characters.Components {
 
 		public void OnUpdate() {
 			if (_moveInput.sqrMagnitude > 0f) {
-				_transform.position += _moveInput * (MoveSpeed * Time.deltaTime);
+				var motion = _moveInput * (MoveSpeed * Time.deltaTime);
+				if (_characterController != null)
+					_characterController.Move(motion);
 			}
 
 			if (_lookDirection.sqrMagnitude > 0f) {

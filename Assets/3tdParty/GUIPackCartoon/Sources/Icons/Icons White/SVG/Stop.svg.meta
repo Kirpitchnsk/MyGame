@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: d802af1af39e14aab924c5ee697cfc3f
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/Stop.svg
-  uploadId: 769476
+guid: 3e453952b9e2ac147bcd612949fbf6bd
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}

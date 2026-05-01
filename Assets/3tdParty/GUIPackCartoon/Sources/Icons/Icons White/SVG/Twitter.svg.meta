@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: c98f4e8eca74c4ca3b5ba332754f3e1d
-AssetOrigin:
-  serializedVersion: 1
-  productId: 48850
-  packageName: Cartoon GUI Pack
-  packageVersion: 2.0.5
-  assetPath: Assets/GUIPackCartoon/Sources/Icons/Icons White/SVG/Twitter.svg
-  uploadId: 769476
+guid: ff3b148a597e7784b9825e5cf099dc6b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
