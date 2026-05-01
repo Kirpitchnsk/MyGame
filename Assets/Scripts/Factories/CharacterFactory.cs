@@ -38,7 +38,7 @@ namespace SibGameJam2026.Characters {
 			return entry.ECharacterType switch {
 				ECharacterType.Player => new Dictionary<Type, ICharacterComponent> {
 					{ typeof(IHealthCharacterComponent), new HealthCharacterComponent(character, entry.Health) },
-					{ typeof(IMovementCharacterComponent), new MovementCharacterComponent(character, entry.MoveSpeed) },
+					{ typeof(IMovementCharacterComponent), new MovementCharacterComponent(character, entry) },
 					{ typeof(IInputCharacterComponent), new InputCharacterComponent(character, _inputService, _cameraService) },
 					{ typeof(IInteractableComponent), new InteractableCharacterComponent(character, _cameraService) },
 					{ typeof(IInventoryComponent), new SimpleCharacterInventoryComponent(character) }
