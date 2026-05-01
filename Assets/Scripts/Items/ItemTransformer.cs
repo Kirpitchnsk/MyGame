@@ -4,25 +4,28 @@ using UnityEngine;
 using Zenject;
 
 namespace SibGameJam2026 {
-	public abstract class ItemTransformer : AInteractItemVisual {
-		[SerializeField] private List<EItemType> _supportedInputTypes = new();
+	public class ItemTransformer : AInteractItemVisual {
+		[SerializeField] private List<EItemType> _supportedInputTypes;
 		[SerializeField] private float _processingTimeSeconds = 5f;
+		[SerializeField] private Transform _outputItemPosition;
 
 		private bool _isProcessing;
 		private float _remainingTime;
 		private Item _processingInputItem;
-		private Item _processingOutputItem;
+		private int _processingOutputItemId;
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
+		private ItemsDatabase _itemsDatabase;
 
 		[Inject]
-		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory) {
+		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory, ItemsDatabase itemsDatabase) {
 			_mergeSystem = mergeSystem;
 			_itemsFactory = itemsFactory;
+			_itemsDatabase = itemsDatabase;
 		}
 
 		public override void OnInteract(InteractContext context) {
-			if (_mergeSystem == null || _itemsFactory == null) {
+			if (_mergeSystem == null || _itemsFactory == null || _itemsDatabase == null) {
 				D.Error($"{nameof(ItemTransformer)} dependencies are not injected.");
 				return;
 			}
@@ -34,7 +37,7 @@ namespace SibGameJam2026 {
 				return;
 			}
 
-			if (_supportedInputTypes != null && !_supportedInputTypes.Contains(item.ItemType)) {
+			if (_supportedInputTypes == null || !_supportedInputTypes.Contains(item.ItemType)) {
 				D.Log($"{nameof(ItemTransformer)} cannot process item type {item.ItemType}.");
 				return;
 			}
@@ -44,7 +47,7 @@ namespace SibGameJam2026 {
 				return;
 			}
 
-			_processingOutputItem = _itemsFactory.Create(outputItemId);
+			_processingOutputItemId = outputItemId;
 			_processingInputItem = item;
 			_remainingTime = _processingTimeSeconds;
 			
@@ -67,7 +70,15 @@ namespace SibGameJam2026 {
 		}
 
 		protected virtual void CompleteProcessing() {
-			D.Log($"{nameof(ItemTransformer)} processed {_processingInputItem.Name}({_processingInputItem.Id}) to {_processingOutputItem.Name}({_processingOutputItem.Id})");
+			var outputPosition = _outputItemPosition != null ? _outputItemPosition.position : transform.position;
+			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
+			var outputVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
+
+			var outputName = _itemsDatabase.TryGetItemById(_processingOutputItemId, out var outputItem)
+				? outputItem.Name
+				: "Unknown";
+
+			D.Log($"{nameof(ItemTransformer)} processed {_processingInputItem.Name}({_processingInputItem.Id}) to {outputName}({_processingOutputItemId}) visual:{outputVisual.name}");
 			_isProcessing = false;
 		}
 	}

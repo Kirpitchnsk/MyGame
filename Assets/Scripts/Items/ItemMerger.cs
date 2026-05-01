@@ -11,19 +11,25 @@ namespace SibGameJam2026 {
 		[SerializeField] private int _maxBufferedItems = 3;
 		[SerializeField] private float _processingTimeSeconds = 5f;
 
+		[Space(10)]
+		[SerializeField] private Transform[] _inputItemPositions;
+		[SerializeField] private Transform _outputItemPosition;
+
 		private readonly List<Item> _bufferedItems = new();
 
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
-		private Item _processingOutputItem;
+		private ItemsDatabase _itemsDatabase;
+		private int _processingOutputItemId;
 		private string _processingInputInfo;
 		private bool _isProcessing;
 		private float _remainingTime;
 
 		[Inject]
-		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory) {
+		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory, ItemsDatabase itemsDatabase) {
 			_mergeSystem = mergeSystem;
 			_itemsFactory = itemsFactory;
+			_itemsDatabase = itemsDatabase;
 		}
 
 		public override void OnInteract(InteractContext context) {
@@ -32,7 +38,7 @@ namespace SibGameJam2026 {
 				return;
 			}
 
-			if (_mergeSystem == null || _itemsFactory == null) {
+			if (_mergeSystem == null || _itemsFactory == null || _itemsDatabase == null) {
 				D.Error($"{nameof(ItemMerger)} dependencies are not injected.");
 				return;
 			}
@@ -71,7 +77,7 @@ namespace SibGameJam2026 {
 			}
 
 			_processingInputInfo = BuildProductsInfo(_bufferedItems);
-			_processingOutputItem = _itemsFactory.Create(outputItemId);
+			_processingOutputItemId = outputItemId;
 			_bufferedItems.Clear();
 
 			_remainingTime = _processingTimeSeconds;
@@ -113,6 +119,15 @@ namespace SibGameJam2026 {
 		}
 
 		protected virtual void CompleteProcessing() {
+			var outputPosition = _outputItemPosition != null ? _outputItemPosition.position : transform.position;
+			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
+			var itemVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
+
+			var outputName = _itemsDatabase.TryGetItemById(_processingOutputItemId, out var outputItem)
+				? outputItem.Name
+				: "Unknown";
+
+			D.Log($"{nameof(ItemMerger)} merged {_processingInputInfo} to {outputName}({_processingOutputItemId}) visual:{itemVisual.name}");
 			_isProcessing = false;
 		}
 	}
