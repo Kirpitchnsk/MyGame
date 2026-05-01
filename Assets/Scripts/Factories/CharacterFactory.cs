@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using SibGameJam2026.Cameras;
 using SibGameJam2026.Characters.Components;
 using SibGameJam2026.Services;
+using UnityEngine;
 using Zenject;
 
 namespace SibGameJam2026.Characters {
-	public class CharacterFactory : IFactory<ECharacterType, ACharacter> {
+	public class CharacterFactory : IFactory<ECharacterType, Vector3, ACharacter> {
 		private readonly CharactersDatabase _charactersDatabase;
 		private readonly IInputService _inputService;
 		private readonly ICameraService _cameraService;
@@ -17,7 +18,7 @@ namespace SibGameJam2026.Characters {
 			_cameraService = cameraService;
 		}
 
-		public ACharacter Create(ECharacterType eCharacterType) {
+		public ACharacter Create(ECharacterType eCharacterType, Vector3 spawnPosition) {
 			var entry = _charactersDatabase.GetEntry(eCharacterType);
 			var prefabInstance = entry.CharacterPrefab.InstantiateAsync().WaitForCompletion();
 			if (prefabInstance == null) {
@@ -25,10 +26,10 @@ namespace SibGameJam2026.Characters {
 			}
 
 			var character = prefabInstance.GetComponent<ACharacter>();
-			if (character == null) {
+			if (character == null)
 				throw new InvalidOperationException($"Prefab for character type {eCharacterType} does not contain {nameof(ACharacter)}");
-			}
 
+			character.transform.position = spawnPosition;
 			character.Initialize(CreateComponents(entry, character));
 			return character;
 		}

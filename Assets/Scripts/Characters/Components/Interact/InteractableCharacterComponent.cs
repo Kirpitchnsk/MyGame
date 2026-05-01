@@ -16,24 +16,20 @@ namespace SibGameJam2026.Characters.Components {
 		}
 
 		public void Interact() {
-			if (!_cameraService.TryGetActiveCamera(out var activeCamera)) {
+			if (!_cameraService.TryGetActiveCamera(out var activeCamera))
 				return;
-			}
 
 			var ray = activeCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-			if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, ItemLayerMask)) {
+			if (!Physics.Raycast(ray, out var hit, 5, ItemLayerMask))
 				return;
-			}
 
 			var distanceToItem = Vector3.Distance(activeCamera.transform.position, hit.point);
-			if (distanceToItem > InteractDistance) {
+			if (distanceToItem > InteractDistance)
 				return;
-			}
 
 			var interactable = hit.collider.GetComponentInParent<IInteractable>();
-			if (interactable == null) {
+			if (interactable == null)
 				return;
-			}
 
 			var usedItem = _character.TryGetComponent<IInventoryComponent>(out var inventoryComponent)
 				? inventoryComponent.CurrentItem

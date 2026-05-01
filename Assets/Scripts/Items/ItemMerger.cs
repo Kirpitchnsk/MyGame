@@ -1,4 +1,5 @@
 using SibGameJam2026.MergeService;
+using SibGameJam2026.Characters.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,12 @@ namespace SibGameJam2026 {
 				return;
 			}
 
-			var item = context.UsedItem;
+			if (!context.UserCharacter.TryGetComponent<IInventoryComponent>(
+				out var inventoryComponent) || !inventoryComponent.HasItem)
+				return;
+			
+
+			var item = inventoryComponent.CurrentItem;
 			if (_supportedInputTypes != null && !_supportedInputTypes.Contains(item.ItemType)) {
 				D.Log($"{nameof(ItemMerger)} cannot accept item type {item.ItemType}.");
 				return;
@@ -54,7 +60,12 @@ namespace SibGameJam2026 {
 				return;
 			}
 
+			if (!inventoryComponent.TryTakeItem(out var itemVisual))
+				return;
+
 			_bufferedItems.Add(item);
+			var inputPosition = GetInputPositionForItem(_bufferedItems.Count - 1);
+			ProcessConsumedItemVisual(itemVisual, inputPosition);
 			D.Log($"{nameof(ItemMerger)} added {item.Name}({item.Id}). Buffered: {_bufferedItems.Count}");
 		}
 
@@ -112,6 +123,27 @@ namespace SibGameJam2026 {
 			}
 
 			return sb.ToString();
+		}
+
+		private Transform GetInputPositionForItem(int bufferedIndex) {
+			if (_inputItemPositions == null
+			|| bufferedIndex < 0
+			|| bufferedIndex >= _inputItemPositions.Length)
+				return null;
+
+			return _inputItemPositions[bufferedIndex];
+		}
+
+		private void ProcessConsumedItemVisual(ItemVisual itemVisual, Transform inputPosition) {
+			if (itemVisual == null)
+				return;
+
+			if (inputPosition != null) {
+				itemVisual.transform.SetPositionAndRotation(inputPosition.position, inputPosition.rotation);
+				itemVisual.SetInteractionColliderEnabled(false);
+			}
+
+			_itemsFactory.ReturnToPool(itemVisual);
 		}
 		
 		protected virtual void StartProcessing() {

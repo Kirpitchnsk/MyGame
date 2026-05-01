@@ -37,7 +37,7 @@ namespace SibGameJam2026.Services {
 			if (IsGameActive)
 				return;
 			
-			var character = _characterFactory.Create(ECharacterType.Player);
+			var character = _characterFactory.Create(ECharacterType.Player, Vector3.zero);
 			var cameraParent = character.Data.CameraPoint != null ? character.Data.CameraPoint : character.transform;
 			_cameraService.CreateCamera(ECameraType.FirstPerson, cameraParent);
 
