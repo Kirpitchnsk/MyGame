@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1616468764614388494}
   - component: {fileID: 6341522653850422257}
   - component: {fileID: 6744287114644686659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,10 +99,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2735181750801894301}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InputPosition
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 3488314366768748541}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004999995, y: 0.022000015, z: 0.754}
+  m_LocalPosition: {x: 0.274, y: 0.022000015, z: -0.106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6622221392841484243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutputPosition
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 3551705839977252433}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004999995, y: 0.022000015, z: 0.754}
+  m_LocalPosition: {x: 0.001, y: 0.022000015, z: 0.258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 4876865456632669119}
   - component: {fileID: 3750068584371362538}
   - component: {fileID: 975497968969849710}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CoffeeMachineStarter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 3605184258086355821}
   - component: {fileID: 4526934278245337849}
   - component: {fileID: 4314118585171834307}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CoffeeMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,10 +307,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760368276866565229}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InputPosition
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -323,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 8928855632855843099}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004999995, y: 0.022000015, z: 0.754}
+  m_LocalPosition: {x: 0.245, y: 0.022000015, z: 0.073}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -380,6 +380,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 342eaa1165c957e48a7599070317e19a, type: 3}
       propertyPath: m_Name
       value: Coffee_Machine_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 342eaa1165c957e48a7599070317e19a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

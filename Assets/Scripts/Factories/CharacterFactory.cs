@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SibGameJam2026.Cameras;
 using SibGameJam2026.Characters.Components;
 using SibGameJam2026.Services;
 using Zenject;
@@ -8,10 +9,12 @@ namespace SibGameJam2026.Characters {
 	public class CharacterFactory : IFactory<ECharacterType, ACharacter> {
 		private readonly CharactersDatabase _charactersDatabase;
 		private readonly IInputService _inputService;
+		private readonly ICameraService _cameraService;
 
-		public CharacterFactory(CharactersDatabase charactersDatabase, IInputService inputService) {
+		public CharacterFactory(CharactersDatabase charactersDatabase, IInputService inputService, ICameraService cameraService) {
 			_charactersDatabase = charactersDatabase;
 			_inputService = inputService;
+			_cameraService = cameraService;
 		}
 
 		public ACharacter Create(ECharacterType eCharacterType) {
@@ -35,7 +38,8 @@ namespace SibGameJam2026.Characters {
 				ECharacterType.Player => new Dictionary<Type, ICharacterComponent> {
 					{ typeof(IHealthCharacterComponent), new HealthCharacterComponent(character, entry.Health) },
 					{ typeof(IMovementCharacterComponent), new MovementCharacterComponent(character, entry.MoveSpeed) },
-					{ typeof(IInputCharacterComponent), new InputCharacterComponent(character, _inputService) }
+					{ typeof(IInputCharacterComponent), new InputCharacterComponent(character, _inputService, _cameraService) },
+					{ typeof(IInteractableComponent), new InteractableCharacterComponent(character, _cameraService) }
 				},
 				_ => throw new ArgumentOutOfRangeException(nameof(entry.ECharacterType), entry.ECharacterType, "Unknown character type")
 			};

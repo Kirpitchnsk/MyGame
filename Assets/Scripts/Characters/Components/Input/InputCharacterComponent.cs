@@ -1,4 +1,5 @@
 using SibGameJam2026.Services;
+using SibGameJam2026.Cameras;
 using UnityEngine;
 
 namespace SibGameJam2026.Characters.Components {
@@ -6,27 +7,35 @@ namespace SibGameJam2026.Characters.Components {
 		private readonly ACharacter _character;
 		public ACharacter Character => _character;
 		private readonly IInputService _inputService;
+		private readonly ICameraService _cameraService;
 
 		private const string MovementAction = "Movement";
+		private const string InteractAction = "Interact";
 		private const float MoveDeadZone = 0.05f;
 
-		public InputCharacterComponent(ACharacter character, IInputService inputService) {
+		public InputCharacterComponent(ACharacter character, IInputService inputService, ICameraService cameraService) {
 			_character = character;
 			_inputService = inputService;
+			_cameraService = cameraService;
 		}
 
 		public void OnUpdate() {
+			if (_inputService.WasButtonPressedThisFrame(InteractAction) &&
+			    _character.TryGetComponent<IInteractableComponent>(out var interactableComponent)) {
+				interactableComponent.Interact();
+			}
+
 			if (!_character.TryGetComponent<IMovementCharacterComponent>(out var movementComponent)) {
 				return;
 			}
 
 			var moveInput = _inputService.GetVector(MovementAction);
-			var activeCamera = Camera.main;
+			var hasActiveCamera = _cameraService.TryGetActiveCamera(out var activeCamera);
 
 			Vector3 forward;
 			Vector3 right;
 
-			if (activeCamera != null) {
+			if (hasActiveCamera) {
 				forward = activeCamera.transform.forward;
 				right = activeCamera.transform.right;
 			} else {

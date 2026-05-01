@@ -7,16 +7,16 @@ namespace SibGameJam2026.Services {
 	public class GameService : IGameService, ITickable {
 		private IInventoryService _inventoryService;
 		private readonly ACharacter.Factory _characterFactory;
-		private readonly CameraController.Factory _cameraFactory;
+		private readonly ICameraService _cameraService;
 		private float _startupTimer;
 		
 		public GameService(
 			IInventoryService inventoryService,
 			ACharacter.Factory characterFactory,
-			CameraController.Factory cameraFactory) {
+			ICameraService cameraService) {
 			_inventoryService = inventoryService;
 			_characterFactory = characterFactory;
-			_cameraFactory = cameraFactory;
+			_cameraService = cameraService;
 			Debug.Log("GameService is Initialized" + inventoryService);
 		}
 		
@@ -39,7 +39,7 @@ namespace SibGameJam2026.Services {
 			
 			var character = _characterFactory.Create(ECharacterType.Player);
 			var cameraParent = character.Data.CameraPoint != null ? character.Data.CameraPoint : character.transform;
-			_cameraFactory.Create(ECameraType.FirstPerson, cameraParent);
+			_cameraService.CreateCamera(ECameraType.FirstPerson, cameraParent);
 
 			_inventoryService.Add(1);
 			IsGameActive = true;

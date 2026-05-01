@@ -27,26 +27,22 @@ namespace SibGameJam2026.Services {
 		}
 
 		public void SwitchActionMap(string actionMapName) {
-			if (string.IsNullOrWhiteSpace(actionMapName)) {
+			if (string.IsNullOrWhiteSpace(actionMapName))
 				return;
-			}
 
 			var actionMap = _gameInput.asset.FindActionMap(actionMapName, false);
-			if (actionMap == null) {
+			if (actionMap == null)
 				return;
-			}
 
-			foreach (var map in _gameInput.asset.actionMaps) {
+			foreach (var map in _gameInput.asset.actionMaps)
 				map.Disable();
-			}
 
 			actionMap.Enable();
 		}
 
 		private InputAction FindAction(string actionName) {
-			if (string.IsNullOrWhiteSpace(actionName)) {
+			if (string.IsNullOrWhiteSpace(actionName))
 				return null;
-			}
 
 			return _gameInput.asset.FindAction(actionName, false);
 		}
