@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5730597074420429084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -161,8 +161,9 @@ GameObject:
   - component: {fileID: 6272164797293351068}
   - component: {fileID: 3798226252344534754}
   - component: {fileID: 2103055895534229688}
+  - component: {fileID: 851364101482470346}
   m_Layer: 5
-  m_Name: poc1
+  m_Name: ClientContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,6 +229,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &851364101482470346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4734903503254541439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50630ffdcf8499468f92b2c5d34e02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Arenar.Services.UI.ClientContainer
+  _portrait: {fileID: 7583020789147721159}
+  _successCheck: {fileID: 6920216604957542007}
+  _failedCheck: {fileID: 2338634426261985949}
 --- !u!1 &5241161539065401189
 GameObject:
   m_ObjectHideFlags: 0
