@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using SibGameJam2026;
 using UnityEngine;
-using Zenject;
 
 namespace SibGameJam2026.MergeService {
 	public class ItemsFactory {

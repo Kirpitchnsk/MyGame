@@ -35,7 +35,11 @@ namespace SibGameJam2026.Characters.Components {
 				return;
 			}
 
-			interactable.OnInteract(new InteractContext(_character, default));
+			var usedItem = _character.TryGetComponent<IInventoryComponent>(out var inventoryComponent)
+				? inventoryComponent.CurrentItem
+				: default;
+
+			interactable.OnInteract(new InteractContext(_character, usedItem));
 		}
 	}
 }

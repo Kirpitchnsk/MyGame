@@ -39,7 +39,8 @@ namespace SibGameJam2026.Characters {
 					{ typeof(IHealthCharacterComponent), new HealthCharacterComponent(character, entry.Health) },
 					{ typeof(IMovementCharacterComponent), new MovementCharacterComponent(character, entry.MoveSpeed) },
 					{ typeof(IInputCharacterComponent), new InputCharacterComponent(character, _inputService, _cameraService) },
-					{ typeof(IInteractableComponent), new InteractableCharacterComponent(character, _cameraService) }
+					{ typeof(IInteractableComponent), new InteractableCharacterComponent(character, _cameraService) },
+					{ typeof(IInventoryComponent), new SimpleCharacterInventoryComponent(character) }
 				},
 				_ => throw new ArgumentOutOfRangeException(nameof(entry.ECharacterType), entry.ECharacterType, "Unknown character type")
 			};
