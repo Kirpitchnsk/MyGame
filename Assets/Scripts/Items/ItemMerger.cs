@@ -16,6 +16,12 @@ namespace SibGameJam2026 {
 		[SerializeField] private Transform[] _inputItemPositions;
 		[SerializeField] private Transform _outputItemPosition;
 
+		[Header("Processing visual (Coffee machine, etc.)")]
+		[SerializeField] private Transform _processingVisualTransform;
+		[SerializeField] private float _squashHalfCycleSeconds = 0.35f;
+		[SerializeField] private float _squashXZStretch = 1.06f;
+		[SerializeField] private float _squashYMul = 0.88f;
+
 		private readonly List<Item> _bufferedItems = new();
 
 		private IMergeSystem _mergeSystem;
@@ -25,6 +31,7 @@ namespace SibGameJam2026 {
 		private string _processingInputInfo;
 		private bool _isProcessing;
 		private float _remainingTime;
+		private ItemProcessingSquashState _squashState;
 
 		[Inject]
 		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory, ItemsDatabase itemsDatabase) {
@@ -101,6 +108,8 @@ namespace SibGameJam2026 {
 				return;
 			}
 
+			ItemProcessingSquashAnimation.Tick(ref _squashState, Time.deltaTime);
+
 			_remainingTime -= Time.deltaTime;
 			if (_remainingTime > 0f) {
 				return;
@@ -148,9 +157,12 @@ namespace SibGameJam2026 {
 		
 		protected virtual void StartProcessing() {
 			_isProcessing = true;
+			PlayProcessingSquash();
 		}
 
 		protected virtual void CompleteProcessing() {
+			StopProcessingSquash();
+
 			var outputPosition = _outputItemPosition != null ? _outputItemPosition.position : transform.position;
 			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
 			var itemVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
@@ -161,6 +173,24 @@ namespace SibGameJam2026 {
 
 			D.Log($"{nameof(ItemMerger)} merged {_processingInputInfo} to {outputName}({_processingOutputItemId}) visual:{itemVisual.name}");
 			_isProcessing = false;
+		}
+
+		private void PlayProcessingSquash() {
+			var visual = _processingVisualTransform != null ? _processingVisualTransform : transform;
+			ItemProcessingSquashAnimation.Start(
+				ref _squashState,
+				visual,
+				_squashHalfCycleSeconds,
+				_squashXZStretch,
+				_squashYMul);
+		}
+
+		private void StopProcessingSquash() {
+			ItemProcessingSquashAnimation.Stop(ref _squashState);
+		}
+
+		private void OnDisable() {
+			StopProcessingSquash();
 		}
 	}
 }

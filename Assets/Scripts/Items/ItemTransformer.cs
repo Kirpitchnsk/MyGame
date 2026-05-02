@@ -11,6 +11,12 @@ namespace SibGameJam2026 {
 		[SerializeField] private Transform _inputItemPosition;
 		[SerializeField] private Transform _outputItemPosition;
 
+		[Header("Processing visual (Teapot, etc.)")]
+		[SerializeField] private Transform _processingVisualTransform;
+		[SerializeField] private float _squashHalfCycleSeconds = 0.35f;
+		[SerializeField] private float _squashXZStretch = 1.06f;
+		[SerializeField] private float _squashYMul = 0.88f;
+
 		private bool _isProcessing;
 		private float _remainingTime;
 		private Item _processingInputItem;
@@ -18,6 +24,7 @@ namespace SibGameJam2026 {
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
 		private ItemsDatabase _itemsDatabase;
+		private ItemProcessingSquashState _squashState;
 
 		[Inject]
 		private void Construct(IMergeSystem mergeSystem, ItemsFactory itemsFactory, ItemsDatabase itemsDatabase) {
@@ -67,6 +74,8 @@ namespace SibGameJam2026 {
 			if (!_isProcessing)
 				return;
 
+			ItemProcessingSquashAnimation.Tick(ref _squashState, Time.deltaTime);
+
 			_remainingTime -= Time.deltaTime;
 			if (_remainingTime > 0f)
 				return;
@@ -76,6 +85,7 @@ namespace SibGameJam2026 {
 
 		protected virtual void StartProcessing() {
 			_isProcessing = true;
+			PlayProcessingSquash();
 		}
 
 		private void ProcessConsumedItemVisual(ItemVisual itemVisual, Transform inputPosition) {
@@ -91,6 +101,8 @@ namespace SibGameJam2026 {
 		}
 
 		protected virtual void CompleteProcessing() {
+			StopProcessingSquash();
+
 			var outputPosition = _outputItemPosition != null ? _outputItemPosition.position : transform.position;
 			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
 			var outputVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
@@ -101,6 +113,24 @@ namespace SibGameJam2026 {
 
 			D.Log($"{nameof(ItemTransformer)} processed {_processingInputItem.Name}({_processingInputItem.Id}) to {outputName}({_processingOutputItemId}) visual:{outputVisual.name}");
 			_isProcessing = false;
+		}
+
+		private void PlayProcessingSquash() {
+			var visual = _processingVisualTransform != null ? _processingVisualTransform : transform;
+			ItemProcessingSquashAnimation.Start(
+				ref _squashState,
+				visual,
+				_squashHalfCycleSeconds,
+				_squashXZStretch,
+				_squashYMul);
+		}
+
+		private void StopProcessingSquash() {
+			ItemProcessingSquashAnimation.Stop(ref _squashState);
+		}
+
+		private void OnDisable() {
+			StopProcessingSquash();
 		}
 	}
 }

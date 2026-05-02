@@ -298,6 +298,10 @@ MonoBehaviour:
   - {fileID: 2735181750801894301}
   - {fileID: 1760368276866565229}
   _outputItemPosition: {fileID: 6622221392841484243}
+  _processingVisualTransform: {fileID: 3499820957459730521}
+  _squashHalfCycleSeconds: 0.35
+  _squashXZStretch: 1.06
+  _squashYMul: 0.88
 --- !u!1 &8928855632855843099
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 342eaa1165c957e48a7599070317e19a, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 2147483647
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

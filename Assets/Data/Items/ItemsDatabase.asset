@@ -100,7 +100,7 @@ MonoBehaviour:
     ItemType: 4
     Icon: {fileID: 0}
     Prefab:
-      m_AssetGUID: 
+      m_AssetGUID: 66bc0bd1bcab798429ec6c702c2a0940
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
