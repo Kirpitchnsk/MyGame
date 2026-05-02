@@ -13,11 +13,11 @@ namespace SibGameJam2026.MergeService {
 		public AssetReference Prefab;
 	}
 
-	public enum EItemType : byte
-	{
+	public enum EItemType : byte {
 		None = 0,
 		CoffeeBean = 1,
 		Liquid = 2,
 		Food = 3,
+		Ingredient = 4,
 	}
 }

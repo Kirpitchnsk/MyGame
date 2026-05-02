@@ -3,7 +3,6 @@ using UnityEngine;
 namespace SibGameJam2026.Characters.Components {
 	public class MovementCharacterComponent : IMovementCharacterComponent {
 		private readonly ACharacter _character;
-		public ACharacter Character => _character;
 		private readonly Transform _transform;
 		private readonly CharacterController _characterController;
 		private Vector3 _moveInput;
@@ -12,6 +11,8 @@ namespace SibGameJam2026.Characters.Components {
 
 		public float MoveSpeed { get; }
 		public float RotationSpeed { get; }
+		public ACharacter Character => _character;
+
 
 		public MovementCharacterComponent(ACharacter character, CharacterEntry entry) {
 			_character = character;
