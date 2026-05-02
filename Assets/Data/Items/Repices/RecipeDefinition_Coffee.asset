@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RecipeDefinition_Coffee
   m_EditorClassIdentifier: Assembly-CSharp::SibGameJam2026.MergeService.RecipeDefinition
   _recipeId: 0
-  _inputItemIds: 0100000003000000
+  _inputItemIds: 0100000002000000
   _outputItemId: 4

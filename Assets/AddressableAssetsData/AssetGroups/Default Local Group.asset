@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b83ca912d613f145ab2deee727df8b3
+    m_Address: Assets/Content/Prefabs/ItemVisuals/CoffeeCup_ItemVisual.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8bc85407c3c9e1b4c9d653d14105fcc0
     m_Address: Assets/Content/Prefabs/ItemVisuals/Water_ItemVisual.prefab
     m_ReadOnly: 0

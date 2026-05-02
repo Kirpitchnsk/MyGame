@@ -23,6 +23,7 @@ namespace SibGameJam2026 {
 		[SerializeField] private float _squashYMul = 0.88f;
 
 		private readonly List<Item> _bufferedItems = new();
+		private readonly List<ItemVisual> _bufferedItemVisuals = new();
 
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
@@ -67,12 +68,18 @@ namespace SibGameJam2026 {
 				return;
 			}
 
+			var slotIndex = _bufferedItems.Count;
+			var inputPosition = GetInputPositionForItem(slotIndex);
+			if (inputPosition == null) {
+				D.Log($"{nameof(ItemMerger)} has no input slot transform for index {slotIndex}.");
+				return;
+			}
+
 			if (!inventoryComponent.TryTakeItem(out var itemVisual))
 				return;
 
 			_bufferedItems.Add(item);
-			var inputPosition = GetInputPositionForItem(_bufferedItems.Count - 1);
-			ProcessConsumedItemVisual(itemVisual, inputPosition);
+			PlaceBufferedInputVisual(itemVisual, inputPosition);
 			D.Log($"{nameof(ItemMerger)} added {item.Name}({item.Id}). Buffered: {_bufferedItems.Count}");
 		}
 
@@ -96,6 +103,7 @@ namespace SibGameJam2026 {
 
 			_processingInputInfo = BuildProductsInfo(_bufferedItems);
 			_processingOutputItemId = outputItemId;
+			PoolBufferedInputVisuals();
 			_bufferedItems.Clear();
 
 			_remainingTime = _processingTimeSeconds;
@@ -143,16 +151,29 @@ namespace SibGameJam2026 {
 			return _inputItemPositions[bufferedIndex];
 		}
 
-		private void ProcessConsumedItemVisual(ItemVisual itemVisual, Transform inputPosition) {
-			if (itemVisual == null)
+		private void PlaceBufferedInputVisual(ItemVisual itemVisual, Transform inputPosition) {
+			if (itemVisual == null || inputPosition == null)
 				return;
 
-			if (inputPosition != null) {
-				itemVisual.transform.SetPositionAndRotation(inputPosition.position, inputPosition.rotation);
-				itemVisual.SetInteractionColliderEnabled(false);
+			itemVisual.transform.SetParent(inputPosition, false);
+			itemVisual.transform.localPosition = Vector3.zero;
+			itemVisual.transform.localRotation = Quaternion.identity;
+			itemVisual.SetInteractionColliderEnabled(false);
+			itemVisual.gameObject.SetActive(true);
+			_bufferedItemVisuals.Add(itemVisual);
+		}
+
+		private void PoolBufferedInputVisuals() {
+			if (_itemsFactory == null)
+				return;
+
+			for (var i = 0; i < _bufferedItemVisuals.Count; i++) {
+				var visual = _bufferedItemVisuals[i];
+				if (visual != null)
+					_itemsFactory.ReturnToPool(visual);
 			}
 
-			_itemsFactory.ReturnToPool(itemVisual);
+			_bufferedItemVisuals.Clear();
 		}
 		
 		protected virtual void StartProcessing() {
@@ -191,6 +212,8 @@ namespace SibGameJam2026 {
 
 		private void OnDisable() {
 			StopProcessingSquash();
+			PoolBufferedInputVisuals();
+			_bufferedItems.Clear();
 		}
 	}
 }
