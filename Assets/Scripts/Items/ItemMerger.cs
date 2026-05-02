@@ -1,3 +1,4 @@
+using SibGameJam2026.Items;
 using SibGameJam2026.MergeService;
 using SibGameJam2026.Characters.Components;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace SibGameJam2026 {
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
 		private ItemsDatabase _itemsDatabase;
-		private int _processingOutputItemId;
+		private ItemId _processingOutputItemId;
 		private string _processingInputInfo;
 		private bool _isProcessing;
 		private float _remainingTime;
@@ -80,7 +81,7 @@ namespace SibGameJam2026 {
 
 			_bufferedItems.Add(item);
 			PlaceBufferedInputVisual(itemVisual, inputPosition);
-			D.Log($"{nameof(ItemMerger)} added {item.Name}({item.Id}). Buffered: {_bufferedItems.Count}");
+			D.Log($"{nameof(ItemMerger)} added {item.Name}({item.ItemId}). Buffered: {_bufferedItems.Count}");
 		}
 
 		public bool TryStartMergeProcess() {
@@ -94,7 +95,7 @@ namespace SibGameJam2026 {
 				return false;
 			}
 
-			var inputIds = _bufferedItems.Select(x => x.Id).ToArray();
+			var inputIds = _bufferedItems.Select(x => x.ItemId).ToArray();
 
 			if (!_mergeSystem.TryGetMergedProductId(inputIds, out var outputItemId)) {
 				D.Log($"{nameof(ItemMerger)} cannot merge current buffer. Recipe was not found.");
@@ -135,7 +136,7 @@ namespace SibGameJam2026 {
 
 				sb.Append(items[i].Name);
 				sb.Append("(");
-				sb.Append(items[i].Id);
+				sb.Append(items[i].ItemId);
 				sb.Append(")");
 			}
 
@@ -188,7 +189,7 @@ namespace SibGameJam2026 {
 			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
 			var itemVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
 
-			var outputName = _itemsDatabase.TryGetItemById(_processingOutputItemId, out var outputItem)
+			var outputName = _itemsDatabase.TryGetItemByItemId(_processingOutputItemId, out var outputItem)
 				? outputItem.Name
 				: "Unknown";
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using SibGameJam2026.Items;
 using UnityEngine;
 using Zenject;
 
@@ -7,12 +8,12 @@ namespace SibGameJam2026.MergeService {
 	public class RepiceTest : IInitializable {
 		private readonly IMergeSystem _mergeSystem;
 		private readonly ItemsDatabase _itemsDatabase;
-		private readonly int[] _inputIds;
+		private readonly ItemId[] _inputIds;
 
 		public RepiceTest(
 			IMergeSystem mergeSystem,
 			ItemsDatabase itemsDatabase,
-			[Inject(Id = "RepiceTestInputIds")] int[] inputIds) {
+			[Inject(Id = "RepiceTestInputIds")] ItemId[] inputIds) {
 			_mergeSystem = mergeSystem;
 			_itemsDatabase = itemsDatabase;
 			_inputIds = inputIds;
@@ -35,7 +36,7 @@ namespace SibGameJam2026.MergeService {
 			D.Log($"RepiceTest failed. Used: {inputInfo}. Result: -1 (no recipe found)");
 		}
 
-		private string BuildProductsInfo(IReadOnlyList<int> ids) {
+		private string BuildProductsInfo(IReadOnlyList<ItemId> ids) {
 			var sb = new StringBuilder();
 			for (var i = 0; i < ids.Count; i++) {
 				if (i > 0) {
@@ -48,8 +49,8 @@ namespace SibGameJam2026.MergeService {
 			return sb.ToString();
 		}
 
-		private string BuildProductInfo(int id) {
-			return _itemsDatabase.TryGetItemById(id, out var item)
+		private string BuildProductInfo(ItemId id) {
+			return _itemsDatabase.TryGetItemByItemId(id, out var item)
 				? $"{item.Name}({id})"
 				: $"Unknown({id})";
 		}

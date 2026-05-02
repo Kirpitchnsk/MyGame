@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using SibGameJam2026.Items;
 
 namespace SibGameJam2026.MergeService {
 	public interface IMergeSystem {
-		bool TryGetMergedProductId(IReadOnlyList<int> inputProductIds, out int outputProductId);
+		bool TryGetMergedProductId(IReadOnlyList<ItemId> inputProductIds, out ItemId outputProductId);
 
-		bool TryGetSourceProductIds(int outputProductId, out IReadOnlyList<int> sourceProductIds);
+		bool TryGetSourceProductIds(ItemId outputProductId, out IReadOnlyList<ItemId> sourceProductIds);
 	}
 }

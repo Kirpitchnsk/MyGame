@@ -1,3 +1,4 @@
+using SibGameJam2026.Items;
 using SibGameJam2026.MergeService;
 using SibGameJam2026.Characters.Components;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace SibGameJam2026 {
 		private bool _isProcessing;
 		private float _remainingTime;
 		private Item _processingInputItem;
-		private int _processingOutputItemId;
+		private ItemId _processingOutputItemId;
 		private IMergeSystem _mergeSystem;
 		private ItemsFactory _itemsFactory;
 		private ItemsDatabase _itemsDatabase;
@@ -54,8 +55,8 @@ namespace SibGameJam2026 {
 				return;
 			}
 			
-			if (!_mergeSystem.TryGetMergedProductId(new[] { item.Id }, out var outputItemId)) {
-				D.Log($"{nameof(ItemTransformer)} cannot transform item {item.Name}({item.Id}). Recipe was not found.");
+			if (!_mergeSystem.TryGetMergedProductId(new[] { item.ItemId }, out var outputItemId)) {
+				D.Log($"{nameof(ItemTransformer)} cannot transform item {item.Name}({item.ItemId}). Recipe was not found.");
 				return;
 			}
 
@@ -107,11 +108,11 @@ namespace SibGameJam2026 {
 			var outputRotation = _outputItemPosition != null ? _outputItemPosition.rotation : transform.rotation;
 			var outputVisual = _itemsFactory.Create(_processingOutputItemId, outputPosition, outputRotation);
 
-			var outputName = _itemsDatabase.TryGetItemById(_processingOutputItemId, out var outputItem)
+			var outputName = _itemsDatabase.TryGetItemByItemId(_processingOutputItemId, out var outputItem)
 				? outputItem.Name
 				: "Unknown";
 
-			D.Log($"{nameof(ItemTransformer)} processed {_processingInputItem.Name}({_processingInputItem.Id}) to {outputName}({_processingOutputItemId}) visual:{outputVisual.name}");
+			D.Log($"{nameof(ItemTransformer)} processed {_processingInputItem.Name}({_processingInputItem.ItemId}) to {outputName}({_processingOutputItemId}) visual:{outputVisual.name}");
 			_isProcessing = false;
 		}
 

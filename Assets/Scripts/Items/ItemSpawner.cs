@@ -1,11 +1,12 @@
 using SibGameJam2026.Characters.Components;
+using SibGameJam2026.Items;
 using SibGameJam2026.MergeService;
 using UnityEngine;
 using Zenject;
 
 namespace SibGameJam2026 {
 	public class ItemSpawner : AInteractItemVisual {
-		[SerializeField] private int _itemId;
+		[SerializeField] private ItemId _itemId;
 
 		private ItemsFactory _itemsFactory;
 

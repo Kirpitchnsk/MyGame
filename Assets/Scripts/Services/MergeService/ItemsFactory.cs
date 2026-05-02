@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using SibGameJam2026.Items;
 using UnityEngine;
 
 namespace SibGameJam2026.MergeService {
 	public class ItemsFactory {
 		private readonly ItemsDatabase _itemsDatabase;
-		private readonly Dictionary<int, Queue<ItemVisual>> _poolByItemId = new();
-		private readonly Dictionary<ItemVisual, int> _reversePoolKey = new();
+		private readonly Dictionary<ItemId, Queue<ItemVisual>> _poolByItemId = new();
+		private readonly Dictionary<ItemVisual, ItemId> _reversePoolKey = new();
 		private readonly Transform _poolRoot;
 
 		public ItemsFactory(ItemsDatabase itemsDatabase) {
@@ -16,9 +17,9 @@ namespace SibGameJam2026.MergeService {
 			UnityEngine.Object.DontDestroyOnLoad(poolRootObject);
 		}
 
-		public ItemVisual Create(int itemId, Vector3 position, Quaternion rotation, Transform parent = null) {
-			if (!_itemsDatabase.TryGetItemById(itemId, out var item)) {
-				throw new ArgumentOutOfRangeException(nameof(itemId), itemId, "Item was not found in ItemsDatabase.");
+		public ItemVisual Create(ItemId itemId, Vector3 position, Quaternion rotation, Transform parent = null) {
+			if (!_itemsDatabase.TryGetItemByItemId(itemId, out var item)) {
+				throw new ArgumentOutOfRangeException(nameof(itemId), (string)itemId, "Item was not found in ItemsDatabase.");
 			}
 
 			if (_poolByItemId.TryGetValue(itemId, out var pool) && pool.Count > 0) {
@@ -28,12 +29,12 @@ namespace SibGameJam2026.MergeService {
 			}
 
 			if (item.Prefab == null) {
-				throw new InvalidOperationException($"Prefab is not assigned for item {item.Name}({item.Id}).");
+				throw new InvalidOperationException($"Prefab is not assigned for item {item.Name}({item.ItemId}).");
 			}
 
 			var visualObject = item.Prefab.InstantiateAsync(position, rotation, parent).WaitForCompletion();
 			if (visualObject == null) {
-				throw new InvalidOperationException($"Failed to instantiate visual for item {item.Name}({item.Id}).");
+				throw new InvalidOperationException($"Failed to instantiate visual for item {item.Name}({item.ItemId}).");
 			}
 
 			var visual = visualObject.GetComponent<ItemVisual>();

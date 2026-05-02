@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
+using SibGameJam2026.Items;
 
 namespace SibGameJam2026.MergeService {
 	public class MergeSystem : IMergeSystem {
-		private static readonly IReadOnlyList<int> EmptyProductList = new List<int>();
+		private static readonly IReadOnlyList<ItemId> EmptyProductList = new List<ItemId>();
 		private readonly RecipesDatabase _recipesDatabase;
 
 		public MergeSystem(RecipesDatabase recipesDatabase) {
 			_recipesDatabase = recipesDatabase;
 		}
 
-		public bool TryGetMergedProductId(IReadOnlyList<int> inputProductIds, out int outputProductId) {
-			outputProductId = -1;
+		public bool TryGetMergedProductId(IReadOnlyList<ItemId> inputProductIds, out ItemId outputProductId) {
+			outputProductId = default;
 
 			if (inputProductIds == null || inputProductIds.Count == 0)
 				return false;
@@ -30,7 +31,7 @@ namespace SibGameJam2026.MergeService {
 			return false;
 		}
 
-		public bool TryGetSourceProductIds(int outputProductId, out IReadOnlyList<int> sourceProductIds) {
+		public bool TryGetSourceProductIds(ItemId outputProductId, out IReadOnlyList<ItemId> sourceProductIds) {
 			sourceProductIds = EmptyProductList;
 
 			if (!_recipesDatabase.TryGetRecipeByOutputItemId(outputProductId, out var recipe)
@@ -41,14 +42,14 @@ namespace SibGameJam2026.MergeService {
 			return true;
 		}
 
-		private static bool AreSameProductSet(IReadOnlyList<int> left, IReadOnlyList<int> right) {
+		private static bool AreSameProductSet(IReadOnlyList<ItemId> left, IReadOnlyList<ItemId> right) {
 			if (left == null || right == null)
 				return false;
 
 			if (left.Count != right.Count)
 				return false;
 
-			var counts = new Dictionary<int, int>();
+			var counts = new Dictionary<ItemId, int>();
 			foreach (var id in left) {
 				if (!counts.TryAdd(id, 1))
 					counts[id]++;

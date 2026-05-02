@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: RecipeDefinition_HotWater
   m_EditorClassIdentifier: Assembly-CSharp::SibGameJam2026.MergeService.RecipeDefinition
   _recipeId: 1
-  _inputItemIds: 00000000
-  _outputItemId: 1
+  _inputItemIds:
+  - _value: Water
+  _outputItemId:
+    _value: HotWater

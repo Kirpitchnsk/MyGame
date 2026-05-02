@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using SibGameJam2026.Items;
 using UnityEngine;
 using Zenject;
 
@@ -7,9 +8,10 @@ namespace SibGameJam2026.MergeService {
 	public class RecipeTest : IInitializable {
 		private readonly IMergeSystem _mergeSystem;
 		private readonly ItemsDatabase _itemsDatabase;
-		private readonly IReadOnlyList<int> _inputIds = new  List<int>()
+		private readonly IReadOnlyList<ItemId> _inputIds = new List<ItemId>
 		{
-			1, 3
+			new ItemId("1"),
+			new ItemId("3"),
 		};
 
 		public RecipeTest(
@@ -36,7 +38,7 @@ namespace SibGameJam2026.MergeService {
 			D.Log($"RepiceTest failed. Used: {inputInfo}. Result: -1 (no recipe found)");
 		}
 
-		private string BuildProductsInfo(IReadOnlyList<int> ids) {
+		private string BuildProductsInfo(IReadOnlyList<ItemId> ids) {
 			var sb = new StringBuilder();
 			for (var i = 0; i < ids.Count; i++) {
 				if (i > 0) {
@@ -49,8 +51,8 @@ namespace SibGameJam2026.MergeService {
 			return sb.ToString();
 		}
 
-		private string BuildProductInfo(int id) {
-			return _itemsDatabase.TryGetItemById(id, out var item)
+		private string BuildProductInfo(ItemId id) {
+			return _itemsDatabase.TryGetItemByItemId(id, out var item)
 				? $"{item.Name}({id})"
 				: $"Unknown({id})";
 		}

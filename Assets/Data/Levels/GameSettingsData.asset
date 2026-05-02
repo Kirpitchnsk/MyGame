@@ -15,7 +15,8 @@ MonoBehaviour:
   _key: Town
   _clientData:
   - <ECharacterType>k__BackingField: 0
-    <ItemId>k__BackingField: 0
+    <ItemId>k__BackingField:
+      _value: "0"
   _location:
     m_AssetGUID: 
     m_SubObjectName: 

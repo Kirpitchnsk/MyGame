@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SibGameJam2026.Items;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,7 @@ namespace SibGameJam2026.MergeService {
 			Container.Bind<RecipesDatabase>().FromInstance(this).AsSingle();
 		}
 
-		public bool TryGetRecipeByOutputItemId(int outputItemId, out RecipeDefinition recipe) {
+		public bool TryGetRecipeByOutputItemId(ItemId outputItemId, out RecipeDefinition recipe) {
 			recipe = _recipes.Find(x => x != null && x.OutputItemId == outputItemId);
 			return recipe != null;
 		}

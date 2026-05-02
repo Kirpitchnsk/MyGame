@@ -6,7 +6,6 @@ using UnityEngine.AddressableAssets;
 namespace SibGameJam2026.MergeService {
 	[Serializable]
 	public struct Item {
-		public int Id;
 		public ItemId ItemId;
 		public string Name;
 		public string Description;
